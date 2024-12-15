@@ -58,7 +58,7 @@
 ```
 
 
-> It seems the repository has exceeded its data quota for Git LFS (Large File Storage), and this is preventing me from pushing these files coupons
+> It seems the repository has exceeded its data quota for Git LFS (Large File Storage), and this is preventing me from pushing these files containing coupon codes
 
 
 ## Approach Used For Reading Coupon Files
@@ -68,8 +68,8 @@ utils
     ├── coupons.go
 ```
 
-- we read all the files for the directory called coupons
-- we create goroutines to read each file, creating a local map of unique codes
+- we read all the files from the directory called coupons
+- we create goroutines to read each file and also creating a local map of unique codes
 - we merge all the local maps code count into a global map we use Mutexes to deal with concurrency
 - we can also used sync.map but it is optmised for Read-Heavy Workloads with Occasional Writes thats why i used this approach
 
