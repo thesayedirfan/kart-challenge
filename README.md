@@ -1,88 +1,77 @@
-# Shopping Cart
+# oolio backend challege
 
-Build a mini food ordering web app featuring product listing and a functional shopping cart.\
-Prioritize correctness in functionality while getting it to look as close to the design as possible.
+### Installation
+1. have latest version of go installed
+    *  verify the installation of go
 
-For this task you will need to integrate to our demo e-commerce API for listing products and placing orders.
+    ```bash
+    go version
+    ```
+2. Clone the repository 
+    ```bash
+    git clone https://github.com/thesayedirfan/kart-challenge
 
-**API Reference**
+    cd kart-challenge
+    ```
+3. Start The Project
+    ```bash
+    make run
 
-You can find our [API Documentation](https://orderfoodonline.deno.dev/public/openapi.html) here.
+    ```
 
-API documentation is based on [OpenAPI3.1](https://swagger.io/specification/v3/) specification.
-You can also find spec file [here](https://orderfoodonline.deno.dev/public/openapi.yaml).
- 
-**Functional Requirements**
+## Project Structure
 
-- Display products with images
-- Add items to the cart and remove items
-- Show order total correctly
-- Increase or decrease item count in the cart
-- Show order confirmation after placing the order
-- Interactive hover and focus states for elements
+```bash
 
-**Bonus Goals**
+├── Makefile
+├── README.md
+├── api
+│   ├── openapi.yaml
+│   ├── order_api.go
+│   └── product_api.go
+├── backend-challenge
+│   └── README.md
+├── cmd
+│   └── main.go
+├── design.fig
+├── domain
+│   ├── order.go
+│   └── product.go
+├── errors
+│   └── errors.go
+├── go.mod
+├── go.sum
+├── middleware
+│   └── api_key.go
+├── repository
+│   ├── order_repository.go
+│   ├── order_repository_test.go
+│   ├── product_repository.go
+│   └── product_repository_test.go
+├── usecase
+│   ├── order_usecase.go
+│   └── product_usecase.go
+└── utils
+    ├── coupons.go
+    └── discount.go
 
-- Allow users to enter a discount code (above the "Confirm Order" button)
-- Discount code `HAPPYHOURS` applies 18% discount to the order total
-- Discount code `BUYGETONE` gives the lowest priced item for free
-- Responsive design based on device's screen size
+```
 
-**Are You a Full Stack Developer??**
 
-Impress us by implementing your own version of the API based on the OpenAPI specification.\
-Choose any language or framework of your choice. For example our top pick for backend is [Go](https://go.dev)
+> It seems the repository has exceeded its data quota for Git LFS (Large File Storage), and this is preventing me from pushing these files coupons
 
-> The API immplementation example available to you at orderfoodonline.deno.dev/api is simplified and doesn't handle some edge cases intentionally.
-> Use your best judgement to build a Robust API server.
 
-**Checkout our [advanced backend challenge](./backend-challenge/README.md) for extra bonus points
+## Approach Used For Reading Coupon Files
+file location
+```bash
+utils
+    ├── coupons.go
+```
 
-## Design
+- we read all the files for the directory called coupons
+- we create goroutines to read each file, creating a local map of unique codes
+- we merge all the local maps code count into a global map we use Mutexes to deal with concurrency
+- we can also used sync.map but it is optmised for Read-Heavy Workloads with Occasional Writes thats why i used this approach
 
-You can find a [Figma](https://figma.com) design file `design.fig` that you can use.
-You might have to use your best judgement for some mobile layout designs and spacing.
 
-### Style Guide
-
-The designs were created to the following widths:
-
-- Mobile: 375px
-- Desktop: 1440px
-
-> 💡 These are just the design sizes. Ensure content is responsive and meets WCAG requirements by testing the full range of screen sizes from 320px to large screens.
-
-**Typography**
-
-- Font size (product names): 16px
-
-### Font
-
-- Family: [Red Hat Text](https://fonts.google.com/specimen/Red+Hat+Text)
-- Weights: 400, 600, 700
-
-## Getting Started
-
-Feel free to use any tool or workflow ou are comformtable with.\
-Here is an example workflow (you can use it as a reference or use your own workflow)
-
-1. Create a new public repository on [GitHub](https://github.com) (alternatively you can use GitLab, BitBucket or Git server of your choice).
-   If you are creating your repository on GitHub, you can chose to use this repository as a starting template. (Click on Use template button at the top)
-2. Look through the deisngs to plan your project. This will help you design UI libraries or tools.
-3. Create a [Vite](https://vite.dev) app to bootstrap a modern front-end project (alternatively use the framework of your choice).
-4. Structure your HTML and preview before theming and adding interactive functionality.
-5. Test and Iterate to build more features
-6. Deploy your app anywhere securely. You may use AWS, Vercel, Deno Deploy, Surge, CloudFlare Pages or some other web app deployment services.
-7. Additionally configure your repository to automatically publish your app on new commit push (CI).
-
-> 💡 Replace or Modify this README to explain your solution and how to run and test it.
-
-_By following these guidelines, you should be able to build a functional and visually appealing mini e-commerce shopping portal that meets the minimum requirements and bonus goals. Good luck! 🚀_
-
-**Resources**
-
-- API documentation: https://orderfoodonline.deno.dev/public/openapi.html
-- API specification: https://orderfoodonline.deno.dev/public/openapi.yaml
-- Figma design file: [design.fig](./design.fig)
-- Red Hat Text font: https://fonts.google.com/specimen/Red+Hat+Text
 
